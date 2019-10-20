@@ -1,0 +1,19 @@
+ // ustawienie zmiennej klasy int i oraz użycie jej w pętli for
+    // skutkuje pojedyńczym odliczaniem. Wątki uzupełniają się wzajemnie.
+
+    // Każdy z wątków posiada przydzieloną pamięć do której posiada wyłączność,
+    // czyli thread1 nie ma dostępu do stosu thread2 i na odwrót.
+    // Jednakże, oba wątki posiadają dostęp do STERTY. Zmienne lokalne są przechowywane wciąż na STOSie (alokowanej pamięci wątku).
+    // Oznacza to, że wątki posiadają K O P I E   L O K A L N Y C H   Z M I E N N Y C H.
+
+// Natomiast miejsce przechowywania W A R T O Ś C I  I N S T A N C J I  O B I E K T U  znajduje się na S T E R C I E.
+// Gdy wiele wątków współdzieli jeden obiekt, czyli  NIE POSIADAJĄ JEGO KOPII. Zatem jeśli jeden wątek zmieni
+// wartość instancji obiektu, to kolejne wątki będą operowały na nowej wartości.
+
+            //   << -----T H R E A D  I N T E R F E R E N C E---- >>
+//    TUTAJ przekazywaliśmy ten sam obiekt Countdown do obu wątków. Kiedy stworzyliśmy obiekt Countdown,
+//    JVM przydzielił przestrzeń pamięci dla wspólnej zmiennej 'i' na S T E R C I E,
+//    wiec po wykonaniu jednego wątku wartość 'i' sie zmienia, a sam wątek zostaje zawieszony.
+//    Umożliwia to wykonanie się kolejnego wątku na aktualizowanej wartości zmiennej 'i'. Gdy uruchomimy zawieszony
+//    wcześniej wątek, to nie będzie on wstanie odczytać nowej watości 'i'.
+//    Dlatego też W Ą T K I  C Z A S A M I  P R Z E S K A K U J Ą  K O L E J N O Ś Ć,
